@@ -1,8 +1,8 @@
 #het is belangrijk dat er in het text bestand geen lege ruimtes ontstaan!
 
-def code(invoerstring):
+def enc(info):
     leeg = ''
-    for x in invoerstring:
+    for x in info:
         a = (ord(x)+5)
         c = chr(a)
         leeg += c
@@ -15,8 +15,8 @@ def login():
     file.close()
 
     # wachtwoord = input('Vul een wachtwoord in:')
-    username = code(input('voer gebruikersnaam in:'))
-    wachtwoord = code(input('voer wachtwoord in:'))
+    username = enc(input('voer gebruikersnaam in:'))
+    wachtwoord = enc(input('voer wachtwoord in:'))
 
     # split inlognaam en wachtwoord en stript \n
     for line in lines:
