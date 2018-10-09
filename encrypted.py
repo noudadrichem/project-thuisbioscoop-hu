@@ -6,7 +6,7 @@ def code(invoerstring):
         c = chr(a)
         leeg += c
     return(leeg)
-    # functie die een account aanmaakt voor de gebruiker.
+  
 
 
 
