@@ -1,7 +1,7 @@
 #het is belangrijk dat er in het text bestand geen lege ruimtes ontstaan!
-def code(invoerstring):
+def enc(info):
     leeg = ''
-    for x in invoerstring:
+    for x in info:
         a = (ord(x)+5)
         c = chr(a)
         leeg += c
@@ -31,8 +31,8 @@ def sign_up():
         wachtwoord = input('Vul gewenst wachtwoord in:')
         # controleert of wachtwoord niet te kort is
         if int(len(wachtwoord)) >= 5:
-            naam1 = code(naam)
-            psww = code(wachtwoord)
+            naam1 = enc(naam)
+            psww = enc(wachtwoord)
 
             username.write(naam1 + ';' + psww + '\n')
             username.close()
