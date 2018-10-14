@@ -1,5 +1,5 @@
-from api import movies
-print('hoi')
+from api import movies, singleMovie
 
-x = movies()
-print(x)
+movies = movies(False)
+single = singleMovie(movies[0]['title'])
+
