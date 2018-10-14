@@ -10,7 +10,7 @@ def enc(info):
 
 def login():
     #opent en leest username.txt
-    file = open('username.text', 'r')
+    file = open('username.txt', 'r')
     lines = file.readlines()
     file.close()
 
