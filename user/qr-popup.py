@@ -15,7 +15,7 @@ def QR(username,film_naam):
     img.save(a,'PNG')
     kijken = open(a)
     return kijken
-QR(#gebruikersnaam,#film waar je aanmeld)
+QR(#gebruikersnaam,#film waar je voor aanmeld)
 
 
 
