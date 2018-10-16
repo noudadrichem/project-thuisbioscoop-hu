@@ -1,3 +1,5 @@
+from qrcode import make
+from uuid import uuid4
 # install deze packeges zodat ie 100% werkt.
 #image package
 #pillow package
@@ -6,18 +8,13 @@
 #qr code met random key.
 
 def generateCode(username,film_naam):
-  import qrcode
-  import uuid
-
-  code = (uuid.uuid4())
-  img = qrcode.make(code)
-  a = ('{}-{}.png'.format(username,film_naam))
-  img.save(a,'PNG')
-  kijken = open(a)
+  uuid = uuid4()
+  img = make(code)
+  qrCodeImageName = ('{}-{}.png'.format(username,film_naam))
+  img.save(qrCodeImageName,'PNG')
+  kijken = open(qrCodeImageName)
   return kijken
 
-
-# generateCode(#gebruikersnaam,#film waar je voor aanmeld)
 generateCode('noudo','film waar je voor aanmeld')
 
 
