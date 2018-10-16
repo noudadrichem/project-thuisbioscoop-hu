@@ -1,3 +1,6 @@
 .vscode
 .idea
 .DS_Store
+filmaanmeldingen/*
+qrcodes/*
+__pycache__
