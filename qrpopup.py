@@ -10,8 +10,11 @@ from uuid import uuid4
 def generateCode(username,film_naam):
   uuid = uuid4()
   img = make(code)
-  qrCodeImageName = ('{}-{}.png'.format(username,film_naam))
-  img.save(qrCodeImageName,'PNG')
+  qrCodeImageName = ('{}-{}.png'.format(
+    username,
+    film_naam
+  )
+  img.save('qr-tickets/' + qrCodeImageName,'PNG')
   kijken = open(qrCodeImageName)
   return kijken
 
