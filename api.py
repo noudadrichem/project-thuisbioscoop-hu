@@ -1,7 +1,7 @@
 import requests
 import xmltodict
 import datetime
-
+from html import unescape
 
 # date
 today = datetime.date.today()
@@ -20,9 +20,8 @@ def apiRequest(time):
 
     # requests response
     r = requests.get(api_url)
-    text = r.text.encode('ascii', 'ignore')
+    text = r.text
     moviesList = []
-
 
     isXML = r.headers['content-type'] == 'text/xml'
     if isXML:
@@ -30,7 +29,7 @@ def apiRequest(time):
         for f in moviesDic['filmsoptv']['film']:
 
             movie = {
-                'title' : f['titel'],
+                'title': unescape(f['titel']),
                 'regiseur' : f['regisseur'],
                 'description' : f['synopsis'],
                 'imdbScore' : f['imdb_rating'],

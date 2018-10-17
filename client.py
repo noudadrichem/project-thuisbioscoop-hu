@@ -33,7 +33,6 @@ def movieLabel(movieTitle, idx, window):
 def popupSignUp(filmIdAsIndex):
     signUp = Tk()
 
-
     lefAlignedLabel('Username', 1, signUp, True)
     usernameField = Entry(master=signUp)
     usernameField.grid(row=2, column=1, columnspan=2)
