@@ -8,10 +8,10 @@ def enc(info):
     return(leeg)
 
 #functie die een account aanmaakt voor de gebruiker.
-def sign_up():
+def sign_up(naam, wachtwoord):
     #maakt een textbestand/leest het bestaand tekstbestand
-    naam = input('vul gewenste gebruikersnaam in:')
-    username = open('usernames.txt', 'r')
+    # naam = input('vul gewenste gebruikersnaam in:')
+    username = open('./usernames.txt', 'r')
     file = username.readlines()
     username.close()
     # splitst inlognaam en wachtwoord
@@ -26,8 +26,8 @@ def sign_up():
 
     else:
         # vraagt gewenste inlognaam en wachtwoord
-        username = open('usernames.txt', 'a')
-        wachtwoord = input('Vul gewenst wachtwoord in:')
+        username = open('./usernames.txt', 'a')
+        # wachtwoord = input('Vul gewenst wachtwoord in:')
         
         # controleert of wachtwoord niet te kort is
         if int(len(wachtwoord)) >= 5:
@@ -38,6 +38,3 @@ def sign_up():
             username.close()
         else:
             print('wachtwoord te kort, kies nieuw wachtwoord')
-
-
-sign_up()

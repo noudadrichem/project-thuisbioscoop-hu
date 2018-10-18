@@ -3,11 +3,22 @@ from tkinter import *
 from PIL import ImageTk, Image
 from qrpopup import generateCode
 from maakfilmaanmeldingen import maakFilmAanmeldingen
+from user.signup import sign_up
+from user.login import login
 
 
-movies = movies()
+movies = movies(True)
 single = singleMovie(movies[0]['title'])
 bg = '#f5f5f5'
+
+def switchMovieDay(day, window):
+    global movies
+    if day:
+        movies = movies(True)
+    else:
+        movies = movies(False)
+
+    window.update()
 
 def lefAlignedLabel(title, idx, window, bold=False):
     label = Label(
@@ -43,6 +54,8 @@ def popupSignUp(filmIdAsIndex):
 
     def meldAanVoorFilm():
         username = usernameField.get()
+        password = passwordField.get()
+
         filmTitel = movies[filmIdAsIndex]['title']
         userCode = generateCode(
             username,
@@ -67,20 +80,43 @@ def popupSignUp(filmIdAsIndex):
 def popupTicket():
     ticket = Tk()
 
+def wrongUserPopUp():
+    popup = Tk()
+    label = Label(
+        master=wrongUser,
+        text='Dit account bestaat niet, maak een account aan.'
+    )
+    label.pack(pady=8)
+    return popup
+
 
 def client():    
     root = Tk()
     root.configure(background=bg)
 
-    label = Label(
+    buttonToday = Button(
         master=root,
-        text='FILMS VANDAAG',
-        height=2,
-        justify=LEFT,
-        background=bg,
-        font=("Open Sans", 12, "bold")
+        text='vandaag',
+        command= lambda: switchMovieDay(True, root)
     )
-    label.grid(row=0, columnspan=2, sticky='w')
+    buttonToday.grid(row=0, column=1, sticky='w')
+
+    buttonTommorow= Button(
+        master=root,
+        text='Morgen',
+        command= lambda: switchMovieDay(False, root)
+    )
+    buttonTommorow.grid(row=0, column=2, sticky='w')
+
+    # label = Label(
+    #     master=root,
+    #     text='FILMS VANDAAG',
+    #     height=2,
+    #     justify=LEFT,
+    #     background=bg,
+    #     font=("Open Sans", 12, "bold")
+    # )
+    # label.grid(row=0, columnspan=2, sticky='w')
 
     for idx in range(len(movies)):
         movie = movies[idx]

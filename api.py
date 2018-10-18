@@ -1,6 +1,7 @@
 import requests
 import xmltodict
 import datetime
+from time import strftime
 from html import unescape
 
 # date
@@ -17,6 +18,7 @@ def apiRequest(time):
         uniqueApiId,
         time 
     )
+    print(api_url)
 
     # requests response
     r = requests.get(api_url)
@@ -34,8 +36,14 @@ def apiRequest(time):
                 'description' : f['synopsis'],
                 'imdbScore' : f['imdb_rating'],
                 'cast' : f['cast'].split(':'),
+                'jaar': f['jaar'],
+                'filmduur': f['duur'],
+                'start': f['starttijd'],
+                'eind': f['eindtijd']
             }
-     
+
+
+
             moviesList.append(movie)
 
     return moviesList
