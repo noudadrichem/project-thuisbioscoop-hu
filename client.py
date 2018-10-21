@@ -96,6 +96,7 @@ def popupSignUp(filmIdAsIndex):
     
     
     def maakAccountAan():
+        None
 
     loginbutton = Button(master=signUp, text='Meld aan voor film', command=meldAanVoorFilm)
     loginbutton.grid(row=5, column=1)
