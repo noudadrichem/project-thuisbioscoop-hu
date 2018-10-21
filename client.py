@@ -93,12 +93,14 @@ def popupSignUp(filmIdAsIndex):
 
             elif enc(password) not in ww:
                 messagebox.showerror('Aanmelding mislukt', 'Verkeerd Wachtwoord ')
-
+    
+    
+    def maakAccountAan():
 
     loginbutton = Button(master=signUp, text='Meld aan voor film', command=meldAanVoorFilm)
     loginbutton.grid(row=5, column=1)
 
-    loginbutton = Button(master=signUp, text='Maak account')
+    loginbutton = Button(master=signUp, text='Maak account', command=maakAccountAan)
     loginbutton.grid(row=5, column=2)
 
     return signUp
