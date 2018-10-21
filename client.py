@@ -49,7 +49,7 @@ def popupSignUp(filmIdAsIndex):
     lefAlignedLabel('Username', 1, signUp, True)
     usernameField = Entry(master=signUp)
     usernameField.grid(row=2, column=1, columnspan=2)
-    
+
     lefAlignedLabel('Password', 3, signUp, True)
     passwordField = Entry(master=signUp, show='*')
     passwordField.grid(row=4, column=1, columnspan=2)
@@ -93,17 +93,43 @@ def popupSignUp(filmIdAsIndex):
 
             elif enc(password) not in ww:
                 messagebox.showerror('Aanmelding mislukt', 'Verkeerd Wachtwoord ')
-    
-    
+
+
+
     def maakAccountAan():
-        messagebox.showinfo('Info','Account is aangemaakt.')
-        signUp.destroy()
+
+        username = usernameField.get()
+        password = passwordField.get()
+        
+
+        with open('usernames.txt') as tijdelijk:
+            file = tijdelijk.readlines()
+
+        for item in file:
+            gesplitst = item.split(';')
+            inlognaam = gesplitst[0]
+
+            if enc(username) == inlognaam:
+                messagebox.showerror('Error', 'Naam is al in gebruik')
+                break
+
+        else:
+            if int(len(password)) >= 5:
+                sign_up(username, password)
+                messagebox.showinfo('Info', 'Account is aangemaakt.')
+                signUp.destroy()
+            else:
+                messagebox.showerror('Error', 'Wachtwoord te kort +5 letters')
+
+
 
     loginbutton = Button(master=signUp, text='Meld aan voor film', command=meldAanVoorFilm)
     loginbutton.grid(row=5, column=1)
 
     loginbutton = Button(master=signUp, text='Maak account', command=maakAccountAan)
     loginbutton.grid(row=5, column=2)
+
+
 
     return signUp
 
