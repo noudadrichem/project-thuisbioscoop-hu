@@ -5,6 +5,8 @@ from qrpopup import generateCode
 from maakfilmaanmeldingen import maakFilmAanmeldingen
 from user.signup import sign_up
 from user.login import login
+from user.login import enc
+from tkinter import messagebox
 
 
 movies = movies(True)
@@ -56,16 +58,41 @@ def popupSignUp(filmIdAsIndex):
         username = usernameField.get()
         password = passwordField.get()
 
-        filmTitel = movies[filmIdAsIndex]['title']
-        userCode = generateCode(
-            username,
-            filmTitel
-        )
-        maakFilmAanmeldingen(
-            filmTitel,
-            username,
-            userCode['uuid']
-        )
+        isLoggedin = login(username, password)
+        with open('usernames.txt') as tijdelijk:
+            inhoud = tijdelijk.readlines()
+
+
+        if isLoggedin:
+            signUp.destroy()
+            filmTitel = movies[filmIdAsIndex]['title']
+            userCode = generateCode(
+                username,
+                filmTitel
+            )
+            maakFilmAanmeldingen(
+                filmTitel,
+                username,
+                userCode['uuid']
+            )
+
+        else:
+            # messagebox.showerror('Aanmelding mislukt', 'Naam of wachtwoord verkeerd.')
+            user = []
+            ww = []
+            for line in inhoud:
+                inhoud = line.split(';')
+                user.append(inhoud[0])
+                ww.append(inhoud[1])
+
+            if enc(password) and enc(username) not in user and ww:
+                messagebox.showerror('Aanmelding mislukt', 'Maak een account aan')
+
+            elif enc(username) not in user:
+                messagebox.showerror('Aanmelding mislukt','verkeerde Gebruikersnaam')
+
+            elif enc(password) not in ww:
+                messagebox.showerror('Aanmelding mislukt', 'Verkeerd Wachtwoord ')
 
 
     loginbutton = Button(master=signUp, text='Meld aan voor film', command=meldAanVoorFilm)
@@ -75,7 +102,6 @@ def popupSignUp(filmIdAsIndex):
     loginbutton.grid(row=5, column=2)
 
     return signUp
-
 
 def popupTicket():
     ticket = Tk()
