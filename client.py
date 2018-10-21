@@ -49,7 +49,7 @@ def popupSignUp(filmIdAsIndex):
     usernameField.grid(row=2, column=1, columnspan=2)
     
     lefAlignedLabel('Password', 3, signUp, True)
-    passwordField = Entry(master=signUp)
+    passwordField = Entry(master=signUp, show='*')
     passwordField.grid(row=4, column=1, columnspan=2)
 
     def meldAanVoorFilm():
