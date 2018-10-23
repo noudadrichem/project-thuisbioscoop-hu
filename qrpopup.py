@@ -1,5 +1,6 @@
 from qrcode import make
 from uuid import uuid4
+from tkinter import *
 
 def generateCode(username,film_naam):
   print('genereert code voor {} met film {}'.format(username,film_naam))
