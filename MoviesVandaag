@@ -1,0 +1,33 @@
+moviesvandaag = movies(True)
+single = singleMovie(moviesvandaag[0]['title'])
+bg = '#f5f5f5'
+
+def switchMovieDay(day):
+    global movies
+    if day:
+        movies = movies(True)
+    else:
+        movies = movies(False)
+
+    window.update()
+
+
+def lefAlignedLabel(title, idx, window, bold=False):
+    label = Label(
+        master=window,
+        text=title,
+        height=2,
+        justify=LEFT,
+        background=bg,
+        font=("Open Sans", 12, 'bold' if bold else 'normal')
+    )
+    label.grid(row=idx, column=1, sticky='w')
+    return label
+
+
+def movieLabel(movieTitle, idx, window):
+    lefAlignedLabel(movieTitle, (idx + 1), window)
+    button = Button(master=window, text='Aanmelden', command=lambda: popupSignUp(idx))
+    button.grid(row=(idx + 1), column=2)
+
+    return button
