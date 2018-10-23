@@ -183,6 +183,3 @@ def client():
 
     root.update()
     root.mainloop()
-
-
-# client()
