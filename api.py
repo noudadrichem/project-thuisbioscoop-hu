@@ -18,7 +18,6 @@ def apiRequest(time):
         uniqueApiId,
         time 
     )
-    print(api_url)
 
     # requests response
     r = requests.get(api_url)
@@ -41,8 +40,6 @@ def apiRequest(time):
                 'start': f['starttijd'],
                 'eind': f['eindtijd']
             }
-
-
 
             moviesList.append(movie)
 

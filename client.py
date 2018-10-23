@@ -1,16 +1,14 @@
 from api import movies, singleMovie
 from tkinter import *
+from tkinter import messagebox
 from PIL import ImageTk, Image
-from qrpopup import generateCode
+from qrpopup import generateCode, popupTicket
 from maakfilmaanmeldingen import maakFilmAanmeldingen
 from user.signup import sign_up
-from user.login import login
-from user.login import enc
-from tkinter import messagebox
-
+from user.login import login, enc
+from time import sleep
 
 movies = movies(True)
-single = singleMovie(movies[0]['title'])
 bg = '#f5f5f5'
 
 def switchMovieDay(day, window):
@@ -76,6 +74,13 @@ def popupSignUp(filmIdAsIndex):
                 userCode['uuid']
             )
 
+            sleep(1)
+            popupTicket(
+                userCode['uuid'],
+                userCode['imageName']
+            )
+            
+
         else:
             # messagebox.showerror('Aanmelding mislukt', 'Naam of wachtwoord verkeerd.')
             user = []
@@ -133,8 +138,6 @@ def popupSignUp(filmIdAsIndex):
 
     return signUp
 
-def popupTicket():
-    ticket = Tk()
 
 def wrongUserPopUp():
     popup = Tk()
@@ -182,29 +185,4 @@ def client():
     root.mainloop()
 
 
-client()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# client()
