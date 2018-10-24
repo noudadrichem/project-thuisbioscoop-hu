@@ -7,10 +7,11 @@ from user.signup import sign_up
 from user.login import login, enc
 from time import sleep
 
-movies = movies(True)
+moviesVandaag = movies(True)
+moviesMorgen = movies(False)
 bg = '#f5f5f5'
 
-def lefAlignedLabel(title, idx, window, bold=False):
+def lefAlignedLabel(title, idx, window, columnNumber, bold=False):
     label = Label(
         master=window,
         text=title,
@@ -19,30 +20,29 @@ def lefAlignedLabel(title, idx, window, bold=False):
         background=bg,
         font=("Open Sans", 12, 'bold' if bold else 'normal')
     )
-    label.grid(row=idx, column=1, sticky='w')
+    label.grid(row=idx, column=columnNumber, sticky='w')
     return label
 
 
-def movieLabel(movieTitle, idx, window):
-    lefAlignedLabel(movieTitle, (idx+1), window)
-    button = Button(master=window, text='Aanmelden', command= lambda: popupSignUp(idx, window))
-    button.grid(row=(idx+1), column=2)
+def movieLabel(movieTitle, idx, window, columnNumber):
+    lefAlignedLabel(movieTitle, (idx+1), window, columnNumber)
 
-    return button
+    button = Button(master=window, text='Aanmelden', command= lambda: popupSignUp(idx, window, movieTitle))
+    button.grid(row=(idx+1), column=columnNumber+1)
 
 
-def popupSignUp(filmIdAsIndex, root):
+def popupSignUp(filmIdAsIndex, root, filmTitel):
     signUp = Tk()
 
-    lefAlignedLabel('Username', 1, signUp, True)
+    lefAlignedLabel('Username', 1, signUp, 1, True)
     usernameField = Entry(master=signUp)
     usernameField.grid(row=2, column=1, columnspan=2)
 
-    lefAlignedLabel('Password', 3, signUp, True)
+    lefAlignedLabel('Password', 3, signUp, 1, True)
     passwordField = Entry(master=signUp, show='*')
     passwordField.grid(row=4, column=1, columnspan=2)
 
-    def meldAanVoorFilm():
+    def meldAanVoorFilm(filmTitel):
         username = usernameField.get()
         password = passwordField.get()
 
@@ -50,12 +50,10 @@ def popupSignUp(filmIdAsIndex, root):
         with open('usernames.txt') as tijdelijk:
             inhoud = tijdelijk.readlines()
 
-
         if isLoggedin:
             signUp.destroy()
-            # HIER MOET OOK DE CLIENT GESLOOPT WORDEN.
             root.destroy()
-            filmTitel = movies[filmIdAsIndex]['title']
+
             userCode = generateCode(
                 username,
                 filmTitel
@@ -66,7 +64,7 @@ def popupSignUp(filmIdAsIndex, root):
                 userCode['uuid']
             )
 
-            sleep(2)
+            sleep(1)
             popupTicket(
                 userCode['uuid'],
                 userCode['imageName']
@@ -120,13 +118,11 @@ def popupSignUp(filmIdAsIndex, root):
 
 
 
-    loginbutton = Button(master=signUp, text='Meld aan voor film', command=meldAanVoorFilm)
+    loginbutton = Button(master=signUp, text='Meld aan voor film', command= lambda: meldAanVoorFilm(filmTitel))
     loginbutton.grid(row=5, column=1)
 
     loginbutton = Button(master=signUp, text='Maak account', command=maakAccountAan)
     loginbutton.grid(row=5, column=2)
-
-
 
     return signUp
 
@@ -141,23 +137,34 @@ def wrongUserPopUp():
     return popup
 
 
-def client():    
+def client():
     root = Tk()
     root.configure(background=bg)
+    root.title('THUISBIOSCOOP')
 
-    label = Label(
+    label1 = Label(
         master=root,
         text='FILMS VANDAAG',
         height=2,
         justify=LEFT,
         background=bg,
-        font=("Open Sans", 12, "bold")
-    )
-    label.grid(row=0, columnspan=2, sticky='w')
+        font=("Open Sans", 12, "bold"))
+    label1.grid(row=0, column=1, columnspan=2, sticky='w')
 
-    for idx in range(len(movies)):
-        movie = movies[idx]
-        movieLabel(movie['title'], idx, root)
+    label2 = Label(
+        master=root,
+        text='FILMS MORGEN',
+        height=2,
+        justify=LEFT,
+        background=bg,
+        font=("Open Sans", 12, "bold"))
+    label2.grid(row=0, column=3, columnspan=2, sticky='w')
+
+    for idx in range(len(moviesVandaag)):
+        movieLabel(moviesVandaag[idx]['title'], idx, root, 1)
+
+    for jdx in range(len(moviesMorgen)):
+        movieLabel(moviesMorgen[jdx]['title'], jdx, root, 3)
 
     root.update()
     root.mainloop()
