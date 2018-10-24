@@ -36,7 +36,7 @@ def movieLabel(movie, idx, window, columnNumber):
         lefAlignedLabel(label, (idx+1), window, (columnNumber + jdx))
 
     button = Button(master=window, text='Aanmelden', command= lambda: popupSignUp(idx, window, movieTitle, aanbieder))
-    button.grid(row=(idx+1), column=columnNumber+3)
+    button.grid(row=(idx+1), column=columnNumber+4)
 
 
 def popupSignUp(filmIdAsIndex, root, filmTitel, aanbieder):
