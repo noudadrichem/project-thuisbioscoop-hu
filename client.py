@@ -29,15 +29,11 @@ def lefAlignedLabel(title, idx, window, columnNumber, bold=False):
 
 
 def movieLabel(movie, idx, window, columnNumber):
-    movieTitle = movie['title']
-    startTijd = formattedUnix(movie['start'])
-    eindTijd = formattedUnix(movie['eind'])
-    aanbieder = movie['aanbieder']
+    labels = [movie['title'], movie['aanbieder'], formattedUnix(movie['start']), formattedUnix(movie['eind'])]
 
-    lefAlignedLabel(movieTitle, (idx+1), window, columnNumber)
-    lefAlignedLabel(aanbieder, (idx+1), window, columnNumber + 1)
-    lefAlignedLabel(startTijd, (idx+1), window, columnNumber + 2)
-    lefAlignedLabel(eindTijd, (idx+1), window, columnNumber + 3)
+    for jdx in range(len(labels)):
+        label = labels[jdx]
+        lefAlignedLabel(label, (idx+1), window, (columnNumber + jdx))
 
     button = Button(master=window, text='Aanmelden', command= lambda: popupSignUp(idx, window, movieTitle, aanbieder))
     button.grid(row=(idx+1), column=columnNumber+3)
