@@ -20,8 +20,6 @@ def apiRequest(time):
         time 
     )
 
-    print(api_url)
-
     # requests response
     r = requests.get(api_url)
     text = r.text
@@ -29,9 +27,15 @@ def apiRequest(time):
 
     isXML = r.headers['content-type'] == 'text/xml'
     if isXML:
+        aanbiederInt = 0
         moviesDic = xmltodict.parse(text)
-        for f in moviesDic['filmsoptv']['film']:
 
+        for f in moviesDic['filmsoptv']['film']:
+            aanbiederInt += 1
+            if aanbiederInt == 4:
+                aanbiederInt = 0
+
+            
             movie = {
                 'title': unescape(f['titel']),
                 'regiseur' : f['regisseur'],
@@ -42,7 +46,7 @@ def apiRequest(time):
                 'filmduur': f['duur'],
                 'start': f['starttijd'],
                 'eind': f['eindtijd'],
-                'aanbieder': aanbieders[randint(0, 3)]
+                'aanbieder': aanbieders[aanbiederInt]
             }
 
             moviesList.append(movie)

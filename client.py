@@ -173,7 +173,7 @@ def client():
         movieLabel(moviesVandaag[idx], idx, root, 1)
 
     for jdx in range(len(moviesMorgen)):
-        movieLabel(moviesMorgen[jdx], jdx, root, 6)
+        movieLabel(moviesMorgen[jdx], jdx, root, 7)
 
     root.update()
     root.mainloop()
