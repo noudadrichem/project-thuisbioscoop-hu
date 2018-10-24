@@ -1,0 +1,45 @@
+def client():
+    root = Tk()
+    root.configure(background=bg)
+    root.title('THUISBIOSCOOP')
+
+    label = Label(
+        master=root,
+        text='FILMS VANDAAG',
+        height=2,
+        justify=LEFT,
+        background=bg,
+        font=("Open Sans", 12, "bold"))
+    label.grid(row=0, columnspan=2, sticky='w')
+
+    label = Label(
+        master=root,
+        text='FILMS MORGEN',
+        height=2,
+        justify=LEFT,
+        background=bg,
+        font=("Open Sans", 12, "bold"))
+    label.grid(row=0, column=4, sticky='w')
+
+    label = Label(
+        master=root,
+        text='',
+        height=2,
+        justify=LEFT,
+        background=bg,
+        font=("Open Sans", 12, "bold"))
+    label.grid(row=0, column=3, sticky='w')
+
+    for idx in range(len(moviesvandaag)):
+        movie = moviesvandaag[idx]
+        movieLabel(movie['title'], idx, root)
+
+    for idx in range(len(moviesmorgen)):
+        movie = moviesmorgen[idx]
+        movieLabelMorgen(movie['title'], idx, root)
+
+    root.update()
+    root.mainloop()
+
+
+client()
