@@ -6,10 +6,14 @@ from maakfilmaanmeldingen import maakFilmAanmeldingen
 from user.signup import sign_up
 from user.login import login, enc
 from time import sleep
+from datetime import datetime
 
 moviesVandaag = movies(True)
 moviesMorgen = movies(False)
 bg = '#f5f5f5'
+
+def formattedUnix(time):
+    return datetime.utcfromtimestamp(int(time)).strftime('%H:%M')
 
 def lefAlignedLabel(title, idx, window, columnNumber, bold=False):
     label = Label(
@@ -24,11 +28,19 @@ def lefAlignedLabel(title, idx, window, columnNumber, bold=False):
     return label
 
 
-def movieLabel(movieTitle, idx, window, columnNumber):
+def movieLabel(movie, idx, window, columnNumber):
+    movieTitle = movie['title']
+    startTijd = formattedUnix(movie['start'])
+    eindTijd = formattedUnix(movie['eind'])
+    aanbieder = movie['aanbieder']
+
     lefAlignedLabel(movieTitle, (idx+1), window, columnNumber)
+    lefAlignedLabel(aanbieder, (idx+1), window, columnNumber + 1)
+    lefAlignedLabel(startTijd, (idx+1), window, columnNumber + 2)
+    lefAlignedLabel(eindTijd, (idx+1), window, columnNumber + 3)
 
     button = Button(master=window, text='Aanmelden', command= lambda: popupSignUp(idx, window, movieTitle))
-    button.grid(row=(idx+1), column=columnNumber+1)
+    button.grid(row=(idx+1), column=columnNumber+3)
 
 
 def popupSignUp(filmIdAsIndex, root, filmTitel):
@@ -155,13 +167,13 @@ def client():
         justify=LEFT,
         background=bg,
         font=("Open Sans", 12, "bold"))
-    label2.grid(row=0, column=3, columnspan=2, sticky='w')
+    label2.grid(row=0, column=6, columnspan=2, sticky='w')
 
     for idx in range(len(moviesVandaag)):
-        movieLabel(moviesVandaag[idx]['title'], idx, root, 1)
+        movieLabel(moviesVandaag[idx], idx, root, 1)
 
     for jdx in range(len(moviesMorgen)):
-        movieLabel(moviesMorgen[jdx]['title'], jdx, root, 3)
+        movieLabel(moviesMorgen[jdx], jdx, root, 6)
 
     root.update()
     root.mainloop()
