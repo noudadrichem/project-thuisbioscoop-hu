@@ -51,9 +51,8 @@ def popupSignUp(filmIdAsIndex, root, filmTitel):
             inhoud = tijdelijk.readlines()
 
         if isLoggedin:
-            signUp.destroy()
             root.destroy()
-
+            signUp.destroy()
             userCode = generateCode(
                 username,
                 filmTitel
@@ -92,7 +91,6 @@ def popupSignUp(filmIdAsIndex, root, filmTitel):
 
 
     def maakAccountAan():
-
         username = usernameField.get()
         password = passwordField.get()
         
@@ -112,7 +110,6 @@ def popupSignUp(filmIdAsIndex, root, filmTitel):
             if int(len(password)) >= 5:
                 sign_up(username, password)
                 messagebox.showinfo('Info', 'Account is aangemaakt.')
-                signUp.destroy()
             else:
                 messagebox.showerror('Error', 'Wachtwoord te kort +5 letters')
 
