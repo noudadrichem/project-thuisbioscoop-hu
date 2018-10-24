@@ -1,45 +1,41 @@
 from qrcode import make
 from uuid import uuid4
 from tkinter import *
+from PIL import ImageTk, Image
+import asyncio
+import gc
+gc.disable()
 
 def generateCode(username,film_naam):
-  print('genereert code voor {} met film {}'.format(username,film_naam))
-  uuid = uuid4()
-  img = make(uuid)
-  qrCodeImageName = '{}_{}.png'.format(
-    username,
-    film_naam.replace(' ', '-')
-  )
-  img.save('./qrcodes/' + qrCodeImageName, 'PNG')
+	print('genereert code voor {} met film {}'.format(username,film_naam))
+	uuid = uuid4()
+	img = make(uuid)
+	qrCodeImageName = '{}_{}.png'.format(
+		username,
+		film_naam.replace(' ', '-')
+	)
+	img.save('./qrcodes/' + qrCodeImageName, 'PNG')
 
-  userCode = {
-    'img': img,
-    'uuid': uuid,
-    'imageName': qrCodeImageName
-  }
-  return userCode
-
+	userCode = {
+		'img': img,
+		'uuid': uuid,
+		'imageName': qrCodeImageName
+	}
+	return userCode
 # generateCode('naam','film naam')
+
 
 def popupTicket(uuid, filename):
     ticket = Tk()
     ticket.title(uuid)  
 
-    img = Image.open('./qrcodes/{}'.format(filename))  
-    photo = ImageTk.PhotoImage(img)
+    path = './qrcodes/{}'.format(filename)
+    print('path:    ', path)
 
-    ctx = Canvas(
-        ticket,
-        width=370,
-        height=370
-    )  
-    ctx.pack()
-    ctx.create_image(
-        0, 0,
-        anchor='nw', 
-        image=photo
-    )  
-
+    img = ImageTk.PhotoImage(Image.open(path))
+    qrImage = Label(ticket, image=img)
+    qrImage.pack(pady=8)
+    
     codeLabel = Label(
         master=ticket,
         text=uuid,
@@ -47,6 +43,11 @@ def popupTicket(uuid, filename):
     )
     codeLabel.pack(pady=8)
 
+
+    button = Button(master=ticket, text='Download ticket')
+    button.pack(pady=8)
+
     ticket.mainloop()
 
-# popupTicket('3B01C512-3DB4-458E-8D89-0809808D26E9', 'maarten_Cars-2.png')
+
+# popupTicket('3B01C512-3DB4-458E-8D89-0809808D26E9', 'noud_Ninja-Turtles.png')

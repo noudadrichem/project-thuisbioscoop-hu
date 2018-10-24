@@ -1,7 +1,6 @@
 from api import movies, singleMovie
 from tkinter import *
 from tkinter import messagebox
-from PIL import ImageTk, Image
 from qrpopup import generateCode, popupTicket
 from maakfilmaanmeldingen import maakFilmAanmeldingen
 from user.signup import sign_up
@@ -10,15 +9,6 @@ from time import sleep
 
 movies = movies(True)
 bg = '#f5f5f5'
-
-def switchMovieDay(day, window):
-    global movies
-    if day:
-        movies = movies(True)
-    else:
-        movies = movies(False)
-
-    window.update()
 
 def lefAlignedLabel(title, idx, window, bold=False):
     label = Label(
@@ -35,13 +25,13 @@ def lefAlignedLabel(title, idx, window, bold=False):
 
 def movieLabel(movieTitle, idx, window):
     lefAlignedLabel(movieTitle, (idx+1), window)
-    button = Button(master=window, text='Aanmelden', command= lambda: popupSignUp(idx))
+    button = Button(master=window, text='Aanmelden', command= lambda: popupSignUp(idx, window))
     button.grid(row=(idx+1), column=2)
 
     return button
 
 
-def popupSignUp(filmIdAsIndex):
+def popupSignUp(filmIdAsIndex, root):
     signUp = Tk()
 
     lefAlignedLabel('Username', 1, signUp, True)
@@ -63,6 +53,8 @@ def popupSignUp(filmIdAsIndex):
 
         if isLoggedin:
             signUp.destroy()
+            # HIER MOET OOK DE CLIENT GESLOOPT WORDEN.
+            root.destroy()
             filmTitel = movies[filmIdAsIndex]['title']
             userCode = generateCode(
                 username,
@@ -74,7 +66,7 @@ def popupSignUp(filmIdAsIndex):
                 userCode['uuid']
             )
 
-            sleep(1)
+            sleep(2)
             popupTicket(
                 userCode['uuid'],
                 userCode['imageName']
@@ -153,29 +145,15 @@ def client():
     root = Tk()
     root.configure(background=bg)
 
-    buttonToday = Button(
+    label = Label(
         master=root,
-        text='vandaag',
-        command= lambda: switchMovieDay(True, root)
+        text='FILMS VANDAAG',
+        height=2,
+        justify=LEFT,
+        background=bg,
+        font=("Open Sans", 12, "bold")
     )
-    buttonToday.grid(row=0, column=1, sticky='w')
-
-    buttonTommorow= Button(
-        master=root,
-        text='Morgen',
-        command= lambda: switchMovieDay(False, root)
-    )
-    buttonTommorow.grid(row=0, column=2, sticky='w')
-
-    # label = Label(
-    #     master=root,
-    #     text='FILMS VANDAAG',
-    #     height=2,
-    #     justify=LEFT,
-    #     background=bg,
-    #     font=("Open Sans", 12, "bold")
-    # )
-    # label.grid(row=0, columnspan=2, sticky='w')
+    label.grid(row=0, columnspan=2, sticky='w')
 
     for idx in range(len(movies)):
         movie = movies[idx]

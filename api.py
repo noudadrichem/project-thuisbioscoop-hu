@@ -3,13 +3,14 @@ import xmltodict
 import datetime
 from time import strftime
 from html import unescape
+from random import randint
 
 # date
 today = datetime.date.today()
 tommorow = today + datetime.timedelta(days=1)
 todayFormatted = today.strftime('%d-%m-%Y')
 tommorowFormatted = tommorow.strftime('%d-%m-%Y')
-
+aanbieders = ['Noud', 'Daan', 'Maarten', 'Pascal']
 
 def apiRequest(time):
     # api credentials
@@ -18,6 +19,8 @@ def apiRequest(time):
         uniqueApiId,
         time 
     )
+
+    print(api_url)
 
     # requests response
     r = requests.get(api_url)
@@ -38,7 +41,8 @@ def apiRequest(time):
                 'jaar': f['jaar'],
                 'filmduur': f['duur'],
                 'start': f['starttijd'],
-                'eind': f['eindtijd']
+                'eind': f['eindtijd'],
+                'aanbieder': aanbieders[randint(0, 3)]
             }
 
             moviesList.append(movie)
