@@ -1,10 +1,11 @@
-def maakFilmAanmeldingen(title, naam, uuid):
-  fileNaam = './filmaanmeldingen/{}.txt'.format(title.replace(' ', '-'))
-  x = open(fileNaam, 'a')
+def maakFilmAanmeldingen(title, naam, uuid, aanbieder):
+  fileNaam = './filmaanmeldingen/{}.csv'.format(title.replace(' ', '-'))
+  filmFile = open(fileNaam, 'a')
 
-  x.write('{};{};{}\n'.format(
+  filmFile.write('{};{};{};{}\n'.format(
     naam,
     title,
-    uuid
+    uuid,
+    aanbieder
   ))
 

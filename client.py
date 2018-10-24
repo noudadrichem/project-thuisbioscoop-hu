@@ -39,11 +39,11 @@ def movieLabel(movie, idx, window, columnNumber):
     lefAlignedLabel(startTijd, (idx+1), window, columnNumber + 2)
     lefAlignedLabel(eindTijd, (idx+1), window, columnNumber + 3)
 
-    button = Button(master=window, text='Aanmelden', command= lambda: popupSignUp(idx, window, movieTitle))
+    button = Button(master=window, text='Aanmelden', command= lambda: popupSignUp(idx, window, movieTitle, aanbieder))
     button.grid(row=(idx+1), column=columnNumber+3)
 
 
-def popupSignUp(filmIdAsIndex, root, filmTitel):
+def popupSignUp(filmIdAsIndex, root, filmTitel, aanbieder):
     signUp = Tk()
 
     lefAlignedLabel('Username', 1, signUp, 1, True)
@@ -72,7 +72,8 @@ def popupSignUp(filmIdAsIndex, root, filmTitel):
             maakFilmAanmeldingen(
                 filmTitel,
                 username,
-                userCode['uuid']
+                userCode['uuid'],
+                aanbieder
             )
 
             sleep(1)
