@@ -34,8 +34,7 @@ def overzicht(beheerder):
       filteredByBeheerder.append(aanmelding)
 
   for aanmelding in filteredByBeheerder:
-    Label(overzichtWindow, text=aanmelding[0] + '  ' +aanmelding[1])\
-      .grid(column=1, sticky='w')
+    Label(overzichtWindow, text=aanmelding[0] + '  ' +aanmelding[1]).grid(column=1, sticky='w')
 
 
   overzichtWindow.update()
