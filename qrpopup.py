@@ -3,8 +3,26 @@ from uuid import uuid4
 from tkinter import *
 from PIL import ImageTk, Image
 import asyncio
-import gc
-gc.disable()
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch, cm
+from reportlab.lib.pagesizes import letter
+
+
+def downloadPdf(uuid, fileName):
+    print('download PDF voor {}, met ticket QR code {}'.format(uuid, fileName))
+    path = './qrcodes/' + fileName
+    pdf = canvas.Canvas('ticket.pdf', pagesize=letter)
+    film_naam = fileName.split('_')[1].replace('.png', '')
+    username = fileName.split('_')[0]
+
+    pdf.drawString(164, 350, uuid)
+    pdf.drawString(164, 320, film_naam)
+    pdf.drawString(164, 300, username)
+    
+    pdf.drawImage(path, 100, 400)
+    pdf.showPage()
+    pdf.save()
+
 
 def generateCode(username,film_naam):
 	print('genereert code voor {} met film {}'.format(username,film_naam))
@@ -25,11 +43,11 @@ def generateCode(username,film_naam):
 # generateCode('naam','film naam')
 
 
-def popupTicket(uuid, filename, client):
+def popupTicket(uuid, fileName):
     ticket = Tk()
     ticket.title(uuid)  
 
-    path = './qrcodes/{}'.format(filename)
+    path = './qrcodes/{}'.format(fileName)
     print('path:    ', path)
 
     img = ImageTk.PhotoImage(Image.open(path))
@@ -43,18 +61,14 @@ def popupTicket(uuid, filename, client):
     )
     codeLabel.pack(pady=8)
 
-
-    buttonDownload = Button(master=ticket, text='Download ticket')
+    buttonDownload = Button(master=ticket, text='Download ticket', command= lambda: downloadPdf(uuid, fileName))
     buttonDownload.pack(pady=8)
 
     def remove():
-        client()
+        # client()
         ticket.quit()
 
     buttonClient = Button(master=ticket, text='Open overzicht', command=remove)
     buttonClient.pack(pady=8)
 
     ticket.mainloop()
-
-
-# popupTicket('3B01C512-3DB4-458E-8D89-0809808D26E9', 'noud_Ninja-Turtles.png')

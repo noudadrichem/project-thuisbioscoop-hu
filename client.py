@@ -1,7 +1,7 @@
 from api import movies, singleMovie
 from tkinter import *
 from tkinter import messagebox
-from qrpopup import generateCode, popupTicket
+from qrpopup import generateCode, popupTicket, downloadPdf
 from maakfilmaanmeldingen import maakFilmAanmeldingen
 from user.signup import sign_up
 from user.login import login, enc
