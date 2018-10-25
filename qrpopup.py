@@ -25,7 +25,7 @@ def generateCode(username,film_naam):
 # generateCode('naam','film naam')
 
 
-def popupTicket(uuid, filename):
+def popupTicket(uuid, filename, client):
     ticket = Tk()
     ticket.title(uuid)  
 
@@ -44,8 +44,15 @@ def popupTicket(uuid, filename):
     codeLabel.pack(pady=8)
 
 
-    button = Button(master=ticket, text='Download ticket')
-    button.pack(pady=8)
+    buttonDownload = Button(master=ticket, text='Download ticket')
+    buttonDownload.pack(pady=8)
+
+    def remove():
+        client()
+        ticket.quit()
+
+    buttonClient = Button(master=ticket, text='Open overzicht', command=remove)
+    buttonClient.pack(pady=8)
 
     ticket.mainloop()
 

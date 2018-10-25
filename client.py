@@ -7,6 +7,7 @@ from user.signup import sign_up
 from user.login import login, enc
 from time import sleep
 from datetime import datetime
+from overzicht import overzicht
 
 moviesVandaag = movies(True)
 moviesMorgen = movies(False)
@@ -111,7 +112,8 @@ def popupSignUp(filmIdAsIndex, root, filmTitel, aanbieder):
             sleep(1)
             popupTicket(
                 userCode['uuid'],
-                userCode['imageName']
+                userCode['imageName'],
+                client
             )
             
 
@@ -183,6 +185,7 @@ def overzichtbeheerders():
     root = Tk()
     root.configure(background=bg)
     root.title('Overzicht beheerders')
+
     label1 = Label(
         master=root,
         text='Wie ben jij?',
@@ -191,12 +194,20 @@ def overzichtbeheerders():
         background=bg,
         font=("Open Sans", 12, "bold"))
     label1.grid(row=0, column=1, columnspan=2)
-    counter = 1
-    for beheerder in beheerders:
-        counter = counter + 1
-        button = Button(master=root, width=50, text=beheerder)#, command= lambda: behheerdersaccount()
-        button.grid(row=(counter), column= 1)
 
+
+    # dit werkt blijkbaar alleen maar zo. niet in een loop...
+    button1 = Button(master=root, width=50, text=beheerders[0], command= lambda: overzicht(beheerders[0]))
+    button1.grid(row=(1), column= 1)
+
+    button2 = Button(master=root, width=50, text=beheerders[1], command= lambda: overzicht(beheerders[1]))
+    button2.grid(row=(2), column= 1)
+
+    button3 = Button(master=root, width=50, text=beheerders[2], command= lambda: overzicht(beheerders[2]))
+    button3.grid(row=(3), column= 1)
+
+    button4 = Button(master=root, width=50, text=beheerders[3], command= lambda: overzicht(beheerders[3]))
+    button4.grid(row=(4), column= 1)
 
 
 def client():
