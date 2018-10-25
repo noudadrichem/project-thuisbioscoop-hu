@@ -15,13 +15,15 @@ def downloadPdf(uuid, fileName):
     film_naam = fileName.split('_')[1].replace('.png', '')
     username = fileName.split('_')[0]
 
-    pdf.drawString(164, 350, uuid)
+    pdf.drawString(164, 350, str(uuid))
     pdf.drawString(164, 320, film_naam)
     pdf.drawString(164, 300, username)
     
     pdf.drawImage(path, 100, 400)
     pdf.showPage()
     pdf.save()
+
+    return pdf
 
 
 def generateCode(username,film_naam):
@@ -40,10 +42,9 @@ def generateCode(username,film_naam):
 		'imageName': qrCodeImageName
 	}
 	return userCode
-# generateCode('naam','film naam')
 
 
-def popupTicket(uuid, fileName):
+def popupTicket(uuid, fileName, client):
     ticket = Tk()
     ticket.title(uuid)  
 
@@ -65,7 +66,7 @@ def popupTicket(uuid, fileName):
     buttonDownload.pack(pady=8)
 
     def remove():
-        # client()
+        client()
         ticket.quit()
 
     buttonClient = Button(master=ticket, text='Open overzicht', command=remove)

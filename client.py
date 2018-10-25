@@ -75,10 +75,13 @@ def popupSignUp(filmIdAsIndex, root, filmTitel, aanbieder):
     signUp = Tk()
 
     lefAlignedLabel('Username', 1, signUp, 1, True)
-    usernameField = Entry(master=signUp).grid(row=2, column=1, columnspan=2)
+    usernameField = Entry(master=signUp)
+    usernameField.grid(row=2, column=1, columnspan=2)
 
     lefAlignedLabel('Password', 3, signUp, 1, True)
-    passwordField = Entry(master=signUp, show='*').grid(row=4, column=1, columnspan=2)
+    passwordField = Entry(master=signUp, show='*')
+    passwordField.grid(row=4, column=1, columnspan=2)
+
 
     def meldAanVoorFilm(filmTitel):
         username = usernameField.get()
