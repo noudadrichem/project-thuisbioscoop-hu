@@ -19,39 +19,35 @@ def formattedUnix(time):
     return datetime.utcfromtimestamp(int(time)).strftime('%H:%M')
 
 def lefAlignedLabel(title, counter, window, columnNumber, bold=False):
-    label = Label(
+    return Label(
         master=window,
         text=title,
         height=2,
         justify=LEFT,
         background=bg,
         font=("Open Sans", 12, 'bold' if bold else 'normal')
-    )
-    label.grid(row=counter, column=columnNumber, sticky='w')
-    return label
+    ).grid(row=counter, column=columnNumber, sticky='w')
 
 
 
 def tableHeading(root, index, text):
-    label3 = Label(
+    Label(
         master=root,
         text=text,
         height=2,
         justify=LEFT,
         background=bg,
         font=("Open Sans", 8, "bold")
-    )
-    label3.grid(row=1, column=index, columnspan=2, sticky='w')
+    ).grid(row=1, column=index, columnspan=2, sticky='w')
 
-    label4 = Label(
+    Label(
         master=root,
         text=text,
         height=2,
         justify=LEFT,
         background=bg,
         font=("Open Sans", 8, "bold")
-    )
-    label4.grid(row=1, column=index+6, columnspan=2, sticky='w')
+    ).grid(row=1, column=index+6, columnspan=2, sticky='w')
 
 
 
@@ -63,7 +59,7 @@ def movieLabel(movie, idx, window, columnNumber):
         label = labels[jdx]
         lefAlignedLabel(label, (idx+1), window, (columnNumber + jdx))
 
-    button = Button(
+    Button(
         master=window, 
         text='Aanmelden', 
         command= lambda: popupSignUp(
@@ -72,20 +68,17 @@ def movieLabel(movie, idx, window, columnNumber):
             movie['title'],
             movie['aanbieder']
             )
-        )
-    button.grid(row=(idx+1), column=columnNumber+4)
+        ).grid(row=(idx+1), column=columnNumber+4)
 
 
 def popupSignUp(filmIdAsIndex, root, filmTitel, aanbieder):
     signUp = Tk()
 
     lefAlignedLabel('Username', 1, signUp, 1, True)
-    usernameField = Entry(master=signUp)
-    usernameField.grid(row=2, column=1, columnspan=2)
+    usernameField = Entry(master=signUp).grid(row=2, column=1, columnspan=2)
 
     lefAlignedLabel('Password', 3, signUp, 1, True)
-    passwordField = Entry(master=signUp, show='*')
-    passwordField.grid(row=4, column=1, columnspan=2)
+    passwordField = Entry(master=signUp, show='*').grid(row=4, column=1, columnspan=2)
 
     def meldAanVoorFilm(filmTitel):
         username = usernameField.get()
@@ -162,23 +155,18 @@ def popupSignUp(filmIdAsIndex, root, filmTitel, aanbieder):
 
 
 
-    loginbutton = Button(master=signUp, text='Meld aan voor film', command= lambda: meldAanVoorFilm(filmTitel))
-    loginbutton.grid(row=5, column=1)
-
-    loginbutton = Button(master=signUp, text='Maak account', command=maakAccountAan)
-    loginbutton.grid(row=5, column=2)
+    Button(master=signUp, text='Meld aan voor film', command= lambda: meldAanVoorFilm(filmTitel)).grid(row=5, column=1)
+    Button(master=signUp, text='Maak account', command=maakAccountAan).grid(row=5, column=2)
 
     return signUp
 
 
 def wrongUserPopUp():
     popup = Tk()
-    label = Label(
+    Label(
         master=wrongUser,
         text='Dit account bestaat niet, maak een account aan.'
-    )
-    label.pack(pady=8)
-    return popup
+    ).pack(pady=8)
 
 
 def overzichtbeheerders():
@@ -186,28 +174,23 @@ def overzichtbeheerders():
     root.configure(background=bg)
     root.title('Overzicht beheerders')
 
-    label1 = Label(
+    Label(
         master=root,
         text='Wie ben jij?',
         height=2,
         justify=LEFT,
         background=bg,
-        font=("Open Sans", 12, "bold"))
-    label1.grid(row=0, column=1, columnspan=2)
+        font=("Open Sans", 12, "bold")).grid(row=0, column=1, columnspan=2)
 
 
     # dit werkt blijkbaar alleen maar zo. niet in een loop...
-    button1 = Button(master=root, width=50, text=beheerders[0], command= lambda: overzicht(beheerders[0]))
-    button1.grid(row=(1), column= 1)
+    Button(master=root, width=50, text=beheerders[0], command= lambda: overzicht(beheerders[0])).grid(row=(1), column= 1)
 
-    button2 = Button(master=root, width=50, text=beheerders[1], command= lambda: overzicht(beheerders[1]))
-    button2.grid(row=(2), column= 1)
+    Button(master=root, width=50, text=beheerders[1], command= lambda: overzicht(beheerders[1])).grid(row=(2), column= 1)
 
-    button3 = Button(master=root, width=50, text=beheerders[2], command= lambda: overzicht(beheerders[2]))
-    button3.grid(row=(3), column= 1)
+    Button(master=root, width=50, text=beheerders[2], command= lambda: overzicht(beheerders[2])).grid(row=(3), column= 1)
 
-    button4 = Button(master=root, width=50, text=beheerders[3], command= lambda: overzicht(beheerders[3]))
-    button4.grid(row=(4), column= 1)
+    Button(master=root, width=50, text=beheerders[3], command= lambda: overzicht(beheerders[3])).grid(row=(4), column= 1)
 
 
 def client():
@@ -215,27 +198,24 @@ def client():
     root.configure(background=bg)
     root.title('THUISBIOSCOOP')
 
-    label1 = Label(
+    Label(
         master=root,
         text='FILMS VANDAAG',
         height=2,
         justify=LEFT,
         background=bg,
-        font=("Open Sans", 12, "bold"))
-    label1.grid(row=0, column=1, columnspan=2, sticky='w')
+        font=("Open Sans", 12, "bold")).grid(row=0, column=1, columnspan=2, sticky='w')
 
-    label2 = Label(
+    Label(
         master=root,
         text='FILMS MORGEN',
         height=2,
         justify=LEFT,
         background=bg,
         font=("Open Sans", 12, "bold")
-    )
-    label2.grid(row=0, column=6, columnspan=2, sticky='w')
+    ).grid(row=0, column=6, columnspan=2, sticky='w')
 
-    beheerderbutton = Button(master=root, text='ben jij een beheerder?', command=lambda: overzichtbeheerders())
-    beheerderbutton.grid(row=len(moviesVandaag)+4, column=1)
+    Button(master=root, text='ben jij een beheerder?', command=lambda: overzichtbeheerders()).grid(row=len(moviesVandaag)+4, column=1)
 
     for index in range(len(tableHeadings)):
         heading = tableHeadings[index]
