@@ -35,13 +35,12 @@ def apiRequest(time):
             if aanbiederInt == 4:
                 aanbiederInt = 0
 
-            
             movie = {
                 'title': unescape(f['titel']),
                 'regiseur' : f['regisseur'],
                 'description' : f['synopsis'],
                 'imdbScore' : f['imdb_rating'],
-                'cast' : f['cast'].split(':'),
+                'cast' : 'Geen cast aanwezig' if f['cast'] == None else f['cast'].split(':'),
                 'jaar': f['jaar'],
                 'filmduur': f['duur'],
                 'start': f['starttijd'],
